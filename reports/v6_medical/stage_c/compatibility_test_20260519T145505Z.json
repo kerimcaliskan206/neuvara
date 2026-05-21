@@ -1,0 +1,20 @@
+{
+  "ood_rejection_rate": 1.0,
+  "ood_rejection_ok": true,
+  "positive_recall": 0.8194,
+  "positive_recall_ok": true,
+  "ece": 0.0243,
+  "calibration_ok": true,
+  "gradcam_passed": null,
+  "gradcam_ok": false,
+  "semantic_conflict_rate": null,
+  "semantic_conflict_ok": null,
+  "semantic_conflict_checked": false,
+  "overall_pass": false,
+  "gate_results": {
+    "ood_rejection": true,
+    "positive_recall": true,
+    "calibration_ece": true,
+    "gradcam_sanity": false
+  }
+}

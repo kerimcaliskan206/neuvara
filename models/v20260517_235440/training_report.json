@@ -1,0 +1,41 @@
+{
+  "timestamp": "20260517_235440",
+  "dataset": "hantavirus_sample.csv",
+  "version": "20260517_235440",
+  "target_column": "label",
+  "n_samples_train": 960,
+  "n_samples_test": 240,
+  "n_features": 21,
+  "imbalance_ratio": 1.05,
+  "best_model": "xgboost",
+  "models": {
+    "random_forest": {
+      "accuracy": 0.7083,
+      "precision": 0.7088,
+      "recall": 0.7083,
+      "f1": 0.7084,
+      "roc_auc": 0.77
+    },
+    "xgboost": {
+      "accuracy": 0.7167,
+      "precision": 0.7176,
+      "recall": 0.7167,
+      "f1": 0.7167,
+      "roc_auc": 0.7696
+    },
+    "lightgbm": {
+      "accuracy": 0.7125,
+      "precision": 0.7132,
+      "recall": 0.7125,
+      "f1": 0.7125,
+      "roc_auc": 0.7507
+    },
+    "voting": {
+      "accuracy": 0.7167,
+      "precision": 0.7181,
+      "recall": 0.7167,
+      "f1": 0.7166,
+      "roc_auc": 0.7707
+    }
+  }
+}

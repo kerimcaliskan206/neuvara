@@ -1,0 +1,89 @@
+# ── Environment / secrets ─────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Python ────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+
+# ── Virtual environments ──────────────────────────────────────────────────
+.venv/
+venv/
+ENV/
+env/
+
+# ── Frontend ──────────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/.next/
+frontend/tsconfig.tsbuildinfo
+
+# ── IDE + OS ──────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Claude Code (local session settings) ─────────────────────────────────
+.claude/
+
+# ── Testing ───────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ── Logs ──────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Jupyter ───────────────────────────────────────────────────────────────
+*.ipynb
+.ipynb_checkpoints/
+
+# ── ML training data (not needed at runtime) ──────────────────────────────
+data/vision/raw/
+data/vision/datasets/
+data/vision/uploads/
+data/vision/staging/
+data/vision/processed/
+data/vision/debug/
+data/segmented_dataset/
+data/medical_ready/
+data/medical_reports/
+data/medical_v6_splits/
+# medical_raw contains only symlinks to data/vision/raw/ (excluded above)
+# — broken on a fresh clone, exclude entirely
+data/medical_raw/
+
+# ── Old ML model versions (not needed at runtime) ─────────────────────────
+# Runtime model: models/v20260517_235440/  ← keep this, not listed here
+models/v20260514_170202/
+models/v20260514_171807/
+models/v20260514_171940/
+models/20260514_171807/
+
+# ── Vision training checkpoints + intermediate stages ─────────────────────
+# Runtime model: models/vision/v6_medical/stage_c_bilateral/best.pt  ← kept
+models/vision/checkpoints/
+models/vision/v6_medical/stage_a_frozen/
+models/vision/v6_medical/stage_b_top1/
+models/vision/v6_medical/calibration/stage_b_calibrated.pt
+models/vision/v6_medical/stage_c_bilateral/last.pt
+models/vision/v20260514_221852/
+models/vision/v20260517_224815/
+models/vision/v20260517_232445/
+models/vision/v20260518_091557/
+models/vision/v20260520_012338/
+
+# ── Experiment artifacts ──────────────────────────────────────────────────
+experiments/

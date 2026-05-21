@@ -1,0 +1,129 @@
+{
+  "split": "val",
+  "num_samples": 658,
+  "classes": [
+    "healthy_xray",
+    "pneumonia_xray",
+    "hard_negative",
+    "fake_medical"
+  ],
+  "class_to_idx": {
+    "healthy_xray": 0,
+    "pneumonia_xray": 1,
+    "hard_negative": 2,
+    "fake_medical": 3
+  },
+  "macro_f1": 0.9154254930008807,
+  "macro_recall": 0.9480770838309052,
+  "macro_precision": 0.8938391356542618,
+  "accuracy": 0.9042553191489362,
+  "per_class": [
+    {
+      "class_name": "healthy_xray",
+      "recall": 0.962,
+      "precision": 0.7451,
+      "f1": 0.8398,
+      "support": 158
+    },
+    {
+      "class_name": "pneumonia_xray",
+      "recall": 0.8703,
+      "precision": 0.984,
+      "f1": 0.9237,
+      "support": 424
+    },
+    {
+      "class_name": "hard_negative",
+      "recall": 0.96,
+      "precision": 0.9796,
+      "f1": 0.9697,
+      "support": 50
+    },
+    {
+      "class_name": "fake_medical",
+      "recall": 1.0,
+      "precision": 0.8667,
+      "f1": 0.9286,
+      "support": 26
+    }
+  ],
+  "ood": {
+    "rejection_recall": 1.0,
+    "rejection_precision": 0.962,
+    "leakage_rate": 0.0,
+    "per_ood_class": {
+      "hard_negative": 0.96,
+      "fake_medical": 1.0
+    }
+  },
+  "calibration": {
+    "ece": 0.2279,
+    "mce": 0.3626,
+    "mean_confidence": 0.6764,
+    "mean_accuracy": 0.9043,
+    "overconfidence": -0.2279,
+    "n_bins": 15
+  },
+  "gradcam": {
+    "passed": true,
+    "mean_entropy": 0.9429,
+    "degenerate_fraction": 0.0,
+    "n_samples_checked": 30,
+    "notes": "Evaluated 30 samples. Degenerate=0 (threshold: entropy>0.15, deg_frac<0.30)."
+  },
+  "compatibility": {
+    "ood_rejection_rate": 1.0,
+    "ood_rejection_ok": true,
+    "positive_recall": 0.9162,
+    "positive_recall_ok": true,
+    "ece": 0.2279,
+    "calibration_ok": false,
+    "gradcam_passed": true,
+    "gradcam_ok": true,
+    "semantic_conflict_rate": null,
+    "semantic_conflict_ok": null,
+    "semantic_conflict_checked": false,
+    "overall_pass": false,
+    "gate_results": {
+      "ood_rejection": true,
+      "positive_recall": true,
+      "calibration_ece": false,
+      "gradcam_sanity": true
+    }
+  },
+  "confusion_matrix": [
+    [
+      152,
+      6,
+      0,
+      0
+    ],
+    [
+      52,
+      369,
+      1,
+      2
+    ],
+    [
+      0,
+      0,
+      48,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      26
+    ]
+  ],
+  "confusion_matrix_labels": [
+    "healthy_xray",
+    "pneumonia_xray",
+    "hard_negative",
+    "fake_medical"
+  ],
+  "elapsed_s": 46.37,
+  "checkpoint_path": "models/vision/v6_medical/stage_b_top1/best.pt",
+  "notes": ""
+}

@@ -1,0 +1,398 @@
+{
+  "old_checkpoint": "models/vision/v6_medical/stage_c_bilateral/best.pt",
+  "new_checkpoint": "models/vision/v20260520_012338",
+  "split_dir": "data/segmented_dataset/val",
+  "n_images": 40,
+  "eval_classes": [
+    "fake_medical",
+    "hard_negative",
+    "healthy_xray",
+    "pneumonia_xray"
+  ],
+  "old_class_order": [
+    "healthy_xray",
+    "pneumonia_xray",
+    "hard_negative",
+    "fake_medical"
+  ],
+  "new_class_order": [
+    "fake_medical",
+    "hard_negative",
+    "healthy_xray",
+    "pneumonia_xray"
+  ],
+  "bias_benchmark": {
+    "old": {
+      "model_tag": "old_full_image",
+      "n_images": 40,
+      "means": {
+        "edge_attention_pct": 47.69,
+        "center_attention_pct": 18.52,
+        "lung_attention_pct": 46.31,
+        "confidence_stability": 0.0269
+      },
+      "by_category": {
+        "fake_medical": {
+          "n": 10,
+          "edge_attention_pct": 47.44,
+          "center_attention_pct": 15.99,
+          "lung_attention_pct": 46.59,
+          "confidence_stability": 0.0185
+        },
+        "hard_negative": {
+          "n": 10,
+          "edge_attention_pct": 44.09,
+          "center_attention_pct": 20.97,
+          "lung_attention_pct": 50.0,
+          "confidence_stability": 0.0128
+        },
+        "healthy_xray": {
+          "n": 10,
+          "edge_attention_pct": 45.3,
+          "center_attention_pct": 21.65,
+          "lung_attention_pct": 50.12,
+          "confidence_stability": 0.0528
+        },
+        "pneumonia_xray": {
+          "n": 10,
+          "edge_attention_pct": 53.94,
+          "center_attention_pct": 15.47,
+          "lung_attention_pct": 38.53,
+          "confidence_stability": 0.0234
+        }
+      }
+    },
+    "new": {
+      "model_tag": "new_roi",
+      "n_images": 40,
+      "means": {
+        "edge_attention_pct": 22.5,
+        "center_attention_pct": 45.95,
+        "lung_attention_pct": 72.8,
+        "confidence_stability": 0.0072
+      },
+      "by_category": {
+        "fake_medical": {
+          "n": 10,
+          "edge_attention_pct": 15.44,
+          "center_attention_pct": 54.93,
+          "lung_attention_pct": 77.43,
+          "confidence_stability": 0.0008
+        },
+        "hard_negative": {
+          "n": 10,
+          "edge_attention_pct": 15.76,
+          "center_attention_pct": 55.09,
+          "lung_attention_pct": 78.69,
+          "confidence_stability": 0.0017
+        },
+        "healthy_xray": {
+          "n": 10,
+          "edge_attention_pct": 23.65,
+          "center_attention_pct": 44.87,
+          "lung_attention_pct": 74.63,
+          "confidence_stability": 0.0113
+        },
+        "pneumonia_xray": {
+          "n": 10,
+          "edge_attention_pct": 35.15,
+          "center_attention_pct": 28.89,
+          "lung_attention_pct": 60.44,
+          "confidence_stability": 0.0151
+        }
+      }
+    },
+    "delta": {
+      "models": {
+        "old": "old_full_image",
+        "new": "new_roi"
+      },
+      "edge_attention_pct": {
+        "old": 47.69,
+        "new": 22.5,
+        "delta": -25.19,
+        "delta_pct": -52.8
+      },
+      "center_attention_pct": {
+        "old": 18.52,
+        "new": 45.95,
+        "delta": 27.43,
+        "delta_pct": 148.1
+      },
+      "lung_attention_pct": {
+        "old": 46.31,
+        "new": 72.8,
+        "delta": 26.49,
+        "delta_pct": 57.2
+      },
+      "confidence_stability": {
+        "old": 0.03,
+        "new": 0.01,
+        "delta": -0.02,
+        "delta_pct": -73.1
+      },
+      "by_category": {
+        "hard_negative": {
+          "edge_attention_pct": {
+            "old": 44.09,
+            "new": 15.76,
+            "delta": -28.33,
+            "delta_pct": -64.3
+          },
+          "lung_attention_pct": {
+            "old": 50.0,
+            "new": 78.69,
+            "delta": 28.69,
+            "delta_pct": 57.4
+          }
+        },
+        "pneumonia_xray": {
+          "edge_attention_pct": {
+            "old": 53.94,
+            "new": 35.15,
+            "delta": -18.79,
+            "delta_pct": -34.8
+          },
+          "lung_attention_pct": {
+            "old": 38.53,
+            "new": 60.44,
+            "delta": 21.91,
+            "delta_pct": 56.9
+          }
+        },
+        "healthy_xray": {
+          "edge_attention_pct": {
+            "old": 45.3,
+            "new": 23.65,
+            "delta": -21.65,
+            "delta_pct": -47.8
+          },
+          "lung_attention_pct": {
+            "old": 50.12,
+            "new": 74.63,
+            "delta": 24.51,
+            "delta_pct": 48.9
+          }
+        },
+        "fake_medical": {
+          "edge_attention_pct": {
+            "old": 47.44,
+            "new": 15.44,
+            "delta": -32.0,
+            "delta_pct": -67.5
+          },
+          "lung_attention_pct": {
+            "old": 46.59,
+            "new": 77.43,
+            "delta": 30.84,
+            "delta_pct": 66.2
+          }
+        }
+      }
+    }
+  },
+  "stress_suite": {
+    "old": {
+      "n_images": 1,
+      "n_transforms": 11,
+      "model_tag": "old_full_image",
+      "flip_rate": 0.1409,
+      "mean_confidence_delta": -0.018,
+      "by_transform": {
+        "rotate_+30": {
+          "flip_rate": 0.15,
+          "mean_delta": -0.0745,
+          "n": 40
+        },
+        "rotate_-30": {
+          "flip_rate": 0.125,
+          "mean_delta": -0.0335,
+          "n": 40
+        },
+        "shift": {
+          "flip_rate": 0.075,
+          "mean_delta": 0.0194,
+          "n": 40
+        },
+        "black_border": {
+          "flip_rate": 0.025,
+          "mean_delta": -0.015,
+          "n": 40
+        },
+        "bright_corners": {
+          "flip_rate": 0.0,
+          "mean_delta": -0.0026,
+          "n": 40
+        },
+        "text_marker": {
+          "flip_rate": 0.0,
+          "mean_delta": 0.0,
+          "n": 40
+        },
+        "noise": {
+          "flip_rate": 0.775,
+          "mean_delta": 0.0547,
+          "n": 40
+        },
+        "center_crop_80": {
+          "flip_rate": 0.125,
+          "mean_delta": -0.0959,
+          "n": 40
+        },
+        "diaphragm_heavy": {
+          "flip_rate": 0.1,
+          "mean_delta": -0.0183,
+          "n": 40
+        },
+        "unilateral_bright": {
+          "flip_rate": 0.125,
+          "mean_delta": 0.0063,
+          "n": 40
+        },
+        "asymmetric_crop": {
+          "flip_rate": 0.05,
+          "mean_delta": -0.039,
+          "n": 40
+        }
+      }
+    },
+    "new": {
+      "n_images": 1,
+      "n_transforms": 11,
+      "model_tag": "new_roi",
+      "flip_rate": 0.0886,
+      "mean_confidence_delta": -0.058,
+      "by_transform": {
+        "rotate_+30": {
+          "flip_rate": 0.025,
+          "mean_delta": -0.0814,
+          "n": 40
+        },
+        "rotate_-30": {
+          "flip_rate": 0.125,
+          "mean_delta": -0.0751,
+          "n": 40
+        },
+        "shift": {
+          "flip_rate": 0.025,
+          "mean_delta": -0.0118,
+          "n": 40
+        },
+        "black_border": {
+          "flip_rate": 0.025,
+          "mean_delta": -0.0167,
+          "n": 40
+        },
+        "bright_corners": {
+          "flip_rate": 0.0,
+          "mean_delta": -0.0025,
+          "n": 40
+        },
+        "text_marker": {
+          "flip_rate": 0.0,
+          "mean_delta": 0.0,
+          "n": 40
+        },
+        "noise": {
+          "flip_rate": 0.7,
+          "mean_delta": -0.2768,
+          "n": 40
+        },
+        "center_crop_80": {
+          "flip_rate": 0.025,
+          "mean_delta": -0.0735,
+          "n": 40
+        },
+        "diaphragm_heavy": {
+          "flip_rate": 0.0,
+          "mean_delta": -0.021,
+          "n": 40
+        },
+        "unilateral_bright": {
+          "flip_rate": 0.05,
+          "mean_delta": -0.0555,
+          "n": 40
+        },
+        "asymmetric_crop": {
+          "flip_rate": 0.0,
+          "mean_delta": -0.024,
+          "n": 40
+        }
+      }
+    }
+  },
+  "gradcam_audit": {
+    "old": {
+      "n_images": 40,
+      "model_tag": "old_full_image",
+      "mean_lung_attention": 0.4875,
+      "mean_edge_attention": 0.4478,
+      "mean_corner_attention": 0.046,
+      "mean_diaphragm_attention": 0.1906,
+      "mean_left_right_balance": 0.1712,
+      "pass_rate": 0.525,
+      "by_class": {
+        "fake_medical": {
+          "lung": 0.4796,
+          "edge": 0.4635,
+          "corner": 0.0384,
+          "pass": 0.4444
+        },
+        "hard_negative": {
+          "lung": 0.4927,
+          "edge": 0.4327,
+          "corner": 0.0345,
+          "pass": 0.5455
+        },
+        "pneumonia_xray": {
+          "lung": 0.3385,
+          "edge": 0.6247,
+          "corner": 0.0931,
+          "pass": 0.0
+        },
+        "healthy_xray": {
+          "lung": 0.6105,
+          "edge": 0.3054,
+          "corner": 0.0252,
+          "pass": 1.0
+        }
+      }
+    },
+    "new": {
+      "n_images": 40,
+      "model_tag": "new_roi",
+      "mean_lung_attention": 0.6991,
+      "mean_edge_attention": 0.2655,
+      "mean_corner_attention": 0.0197,
+      "mean_diaphragm_attention": 0.121,
+      "mean_left_right_balance": 0.1818,
+      "pass_rate": 0.925,
+      "by_class": {
+        "fake_medical": {
+          "lung": 0.7545,
+          "edge": 0.1741,
+          "corner": 0.0085,
+          "pass": 1.0
+        },
+        "hard_negative": {
+          "lung": 0.7568,
+          "edge": 0.1919,
+          "corner": 0.0123,
+          "pass": 1.0
+        },
+        "pneumonia_xray": {
+          "lung": 0.505,
+          "edge": 0.411,
+          "corner": 0.0336,
+          "pass": 0.5714
+        },
+        "healthy_xray": {
+          "lung": 0.7166,
+          "edge": 0.3142,
+          "corner": 0.0265,
+          "pass": 1.0
+        }
+      }
+    }
+  }
+}

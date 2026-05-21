@@ -1,0 +1,100 @@
+INFO  Device: mps
+INFO  Loading Stage B calibrated checkpoint: models/vision/v6_medical/calibration/stage_b_calibrated.pt
+INFO  EfficientNetClassifier: efficientnet_b0 | pretrained=False | in_features=1280 | num_classes=4
+INFO  VisionModelRegistry: built efficientnet_b0 | classes=4 | pretrained=False | frozen=False
+INFO  Loaded: classes=['healthy_xray', 'pneumonia_xray', 'hard_negative', 'fake_medical'], T*=0.4585
+INFO  Unfreeze: top-2 blocks + head | trainable=1,134,516 / total=4,012,672 (28.3%)
+INFO  ImageFolderDataset [train]: 4937 images | healthy_xray=1184 (24%) | pneumonia_xray=3184 (64%) | hard_negative=372 (8%) | fake_medical=197 (4%)
+INFO  ImageFolderDataset [val]: 658 images | healthy_xray=158 (24%) | pneumonia_xray=424 (64%) | hard_negative=50 (8%) | fake_medical=26 (4%)
+INFO  Dataloaders ready | train=4937  val=658  classes=['healthy_xray', 'pneumonia_xray', 'hard_negative', 'fake_medical']
+INFO  ════════════════════════════════════════════════════════════
+INFO  Stage C training: 15 epochs, FocalLoss γ=2.5
+INFO  backbone_lr=5.00e-06, head_lr=2.50e-05
+INFO  ════════════════════════════════════════════════════════════
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch  1/15 | train_f1=0.3481  val_f1=0.7896  val_loss=0.7941  [66.4s]
+INFO  Checkpoint saved: /Users/kerim/Desktop/hantaproject/models/vision/v6_medical/stage_c_bilateral/best.pt (val_f1=0.7896)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch  2/15 | train_f1=0.6285  val_f1=0.9007  val_loss=0.2746  [64.9s]
+INFO  Checkpoint saved: /Users/kerim/Desktop/hantaproject/models/vision/v6_medical/stage_c_bilateral/best.pt (val_f1=0.9007)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch  3/15 | train_f1=0.7911  val_f1=0.8851  val_loss=0.2512  [64.9s]
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch  4/15 | train_f1=0.8297  val_f1=0.8874  val_loss=0.2049  [64.6s]
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch  5/15 | train_f1=0.8393  val_f1=0.8987  val_loss=0.1889  [65.2s]
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch  6/15 | train_f1=0.8634  val_f1=0.9131  val_loss=0.1801  [65.3s]
+INFO  Checkpoint saved: /Users/kerim/Desktop/hantaproject/models/vision/v6_medical/stage_c_bilateral/best.pt (val_f1=0.9131)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch  7/15 | train_f1=0.8643  val_f1=0.9052  val_loss=0.1971  [65.6s]
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch  8/15 | train_f1=0.8642  val_f1=0.9059  val_loss=3.6776  [65.4s]
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch  9/15 | train_f1=0.8690  val_f1=0.9155  val_loss=0.1794  [65.3s]
+INFO  Checkpoint saved: /Users/kerim/Desktop/hantaproject/models/vision/v6_medical/stage_c_bilateral/best.pt (val_f1=0.9155)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch 10/15 | train_f1=0.8579  val_f1=0.9052  val_loss=0.1836  [65.4s]
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch 11/15 | train_f1=0.8680  val_f1=0.8991  val_loss=0.1927  [65.1s]
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch 12/15 | train_f1=0.8617  val_f1=0.9040  val_loss=0.1858  [65.2s]
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch 13/15 | train_f1=0.8585  val_f1=0.9080  val_loss=0.1823  [65.1s]
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch 14/15 | train_f1=0.8781  val_f1=0.9164  val_loss=0.1766  [65.1s]
+INFO  Checkpoint saved: /Users/kerim/Desktop/hantaproject/models/vision/v6_medical/stage_c_bilateral/best.pt (val_f1=0.9164)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/kerim/Desktop/hantaproject/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:1095: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+INFO  Epoch 15/15 | train_f1=0.8520  val_f1=0.9172  val_loss=0.1749  [65.3s]
+INFO  Checkpoint saved: /Users/kerim/Desktop/hantaproject/models/vision/v6_medical/stage_c_bilateral/best.pt (val_f1=0.9172)
+INFO  Checkpoint saved: /Users/kerim/Desktop/hantaproject/models/vision/v6_medical/stage_c_bilateral/last.pt (val_f1=0.9172)
+INFO  Report saved: /Users/kerim/Desktop/hantaproject/reports/v6_medical/stage_c/stage_c_report.json
+INFO  ════════════════════════════════════════════════════════════
+INFO  Stage C complete | best_val_f1=0.9172 @ epoch 15
+INFO  Checkpoint: /Users/kerim/Desktop/hantaproject/models/vision/v6_medical/stage_c_bilateral/best.pt
+INFO  ════════════════════════════════════════════════════════════

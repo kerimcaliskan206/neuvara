@@ -1,0 +1,123 @@
+{
+  "split": "test",
+  "num_samples": 987,
+  "classes": [
+    "healthy_xray",
+    "pneumonia_xray",
+    "hard_negative",
+    "fake_medical"
+  ],
+  "class_to_idx": {
+    "healthy_xray": 0,
+    "pneumonia_xray": 1,
+    "hard_negative": 2,
+    "fake_medical": 3
+  },
+  "macro_f1": 0.8918779327099072,
+  "macro_recall": 0.8708919658286748,
+  "macro_precision": 0.9299053953682284,
+  "accuracy": 0.9017223910840932,
+  "per_class": [
+    {
+      "class_name": "healthy_xray",
+      "recall": 0.6498,
+      "precision": 0.9565,
+      "f1": 0.7739,
+      "support": 237
+    },
+    {
+      "class_name": "pneumonia_xray",
+      "recall": 0.989,
+      "precision": 0.8836,
+      "f1": 0.9333,
+      "support": 637
+    },
+    {
+      "class_name": "hard_negative",
+      "recall": 0.973,
+      "precision": 0.9351,
+      "f1": 0.9536,
+      "support": 74
+    },
+    {
+      "class_name": "fake_medical",
+      "recall": 0.8718,
+      "precision": 0.9444,
+      "f1": 0.9067,
+      "support": 39
+    }
+  ],
+  "ood": {
+    "rejection_recall": 1.0,
+    "rejection_precision": 1.0,
+    "leakage_rate": 0.0,
+    "per_ood_class": {
+      "hard_negative": 0.973,
+      "fake_medical": 0.8718
+    }
+  },
+  "calibration": {
+    "ece": 0.0243,
+    "mce": 0.1178,
+    "mean_confidence": 0.8774,
+    "mean_accuracy": 0.9017,
+    "overconfidence": -0.0243,
+    "n_bins": 15
+  },
+  "gradcam": null,
+  "compatibility": {
+    "ood_rejection_rate": 1.0,
+    "ood_rejection_ok": true,
+    "positive_recall": 0.8194,
+    "positive_recall_ok": true,
+    "ece": 0.0243,
+    "calibration_ok": true,
+    "gradcam_passed": null,
+    "gradcam_ok": false,
+    "semantic_conflict_rate": null,
+    "semantic_conflict_ok": null,
+    "semantic_conflict_checked": false,
+    "overall_pass": false,
+    "gate_results": {
+      "ood_rejection": true,
+      "positive_recall": true,
+      "calibration_ece": true,
+      "gradcam_sanity": false
+    }
+  },
+  "confusion_matrix": [
+    [
+      154,
+      83,
+      0,
+      0
+    ],
+    [
+      7,
+      630,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      72,
+      2
+    ],
+    [
+      0,
+      0,
+      5,
+      34
+    ]
+  ],
+  "confusion_matrix_labels": [
+    "healthy_xray",
+    "pneumonia_xray",
+    "hard_negative",
+    "fake_medical"
+  ],
+  "elapsed_s": 14.36,
+  "checkpoint_path": "models/vision/v6_medical/stage_c_bilateral/best.pt",
+  "notes": ""
+}

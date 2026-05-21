@@ -1,0 +1,13 @@
+{
+  "temperature": 0.458481,
+  "apply_to": "stage_b_top1",
+  "classes": [
+    "healthy_xray",
+    "pneumonia_xray",
+    "hard_negative",
+    "fake_medical"
+  ],
+  "num_classes": 4,
+  "calibration_phase": "15",
+  "notes": "Divide raw logits by this temperature before softmax. T < 1 sharpens predictions (underconfident model). argmax predictions are unchanged."
+}
