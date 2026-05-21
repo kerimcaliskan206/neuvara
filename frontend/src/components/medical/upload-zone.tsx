@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, AlertTriangle, Camera, ImagePlus, Thermometer, Upload, User, X, Zap } from "lucide-react";
+import { Activity, AlertTriangle, Camera, ImagePlus, Thermometer, User, X, Zap } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 
 import { cn, formatBytes } from "@/lib/utils";
