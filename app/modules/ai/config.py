@@ -7,16 +7,12 @@ so the AI layer is fully configurable without code changes.
 from pydantic import BaseModel, Field
 
 
-class OllamaConfig(BaseModel):
-    """Connection settings for the Ollama HTTP API."""
+class GroqConfig(BaseModel):
+    """Connection settings for the Groq API."""
 
-    base_url: str = Field(default="http://localhost:11434")
-    model: str = Field(default="llama3.1:8b")
-    timeout_seconds: float = Field(default=60.0, gt=0)
-    keep_alive: str = Field(
-        default="5m",
-        description="Ollama keep_alive setting — keeps the model resident between calls.",
-    )
+    api_key: str = Field(default="")
+    model: str = Field(default="llama-3.3-70b-versatile")
+    timeout_seconds: float = Field(default=30.0, gt=0)
 
 
 class GenerationConfig(BaseModel):
@@ -39,7 +35,7 @@ class SafetyConfig(BaseModel):
 class AIConfig(BaseModel):
     """Top-level AI module config."""
 
-    ollama: OllamaConfig = OllamaConfig()
+    groq: GroqConfig = GroqConfig()
     generation: GenerationConfig = GenerationConfig()
     safety: SafetyConfig = SafetyConfig()
     enabled: bool = Field(
@@ -55,11 +51,10 @@ def build_ai_config_from_settings() -> "AIConfig":
 
     return AIConfig(
         enabled=settings.AI_ENABLED,
-        ollama=OllamaConfig(
-            base_url=settings.OLLAMA_BASE_URL,
-            model=settings.OLLAMA_MODEL,
-            timeout_seconds=settings.OLLAMA_TIMEOUT_SECONDS,
-            keep_alive=settings.OLLAMA_KEEP_ALIVE,
+        groq=GroqConfig(
+            api_key=settings.GROQ_API_KEY,
+            model=settings.GROQ_MODEL,
+            timeout_seconds=settings.GROQ_TIMEOUT_SECONDS,
         ),
         generation=GenerationConfig(
             temperature=settings.AI_TEMPERATURE,

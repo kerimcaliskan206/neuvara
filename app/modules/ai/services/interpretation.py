@@ -59,7 +59,7 @@ class _BaseInterpretation:
         try:
             completion = await self.provider.chat(
                 messages,
-                model=self.config.ollama.model,
+                model=self.config.groq.model,
                 temperature=self.config.generation.temperature,
                 top_p=self.config.generation.top_p,
                 max_tokens=self.config.generation.max_tokens,

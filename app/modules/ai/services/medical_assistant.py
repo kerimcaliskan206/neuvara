@@ -135,7 +135,7 @@ class MedicalAssistantService:
         try:
             completion = await self.provider.chat(
                 messages,
-                model=self.config.ollama.model,
+                model=self.config.groq.model,
                 temperature=self.config.generation.temperature,
                 top_p=self.config.generation.top_p,
                 max_tokens=self.config.generation.max_tokens,
@@ -215,7 +215,7 @@ class MedicalAssistantService:
         try:
             async for token in self.provider.chat_stream(
                 messages,
-                model=self.config.ollama.model,
+                model=self.config.groq.model,
                 temperature=self.config.generation.temperature,
                 top_p=self.config.generation.top_p,
                 max_tokens=self.config.generation.max_tokens,
@@ -271,7 +271,7 @@ class MedicalAssistantService:
             content=content,
             refused=True,
             refusal_reason=reason,
-            model=self.config.ollama.model,
+            model=self.config.groq.model,
             duration_ms=round((time.perf_counter() - start) * 1000, 2),
             prompt_tokens=None,
             completion_tokens=None,

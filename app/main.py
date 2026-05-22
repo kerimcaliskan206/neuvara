@@ -44,40 +44,42 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    import asyncio as _asyncio
+
     setup_logging(debug=settings.DEBUG, environment=settings.ENVIRONMENT)
     logger.info(
         "Starting %s v%s [%s]", settings.APP_NAME, settings.APP_VERSION, settings.ENVIRONMENT
     )
+    loop = _asyncio.get_running_loop()
 
     # ── ML model warm-up ─────────────────────────────────────────────────────
-    # Load once at startup so the first request is not penalized by disk I/O.
-    # Skip entirely when ML_AUTO_LOAD_ON_STARTUP=false — useful when a
-    # persisted model's native wheel ABI does not match the installed one.
+    # State is set immediately so routes return 503 (not AttributeError) while
+    # the background thread loads the model.
     from app.modules.ml.inference.service import InferenceService
     service = InferenceService()
+    app.state.inference_service = service
+
     if settings.ML_AUTO_LOAD_ON_STARTUP:
-        loaded = service.load_best()
-        if loaded:
-            logger.info(
-                "ML model ready: %s @ %s", service.model_name, service.model_version
-            )
-        else:
-            logger.warning(
-                "No trained ML model found — /ml/predict will return 503. "
-                "Run: python scripts/train.py"
-            )
+        def _load_ml():
+            loaded = service.load_best()
+            if loaded:
+                logger.info(
+                    "ML model ready: %s @ %s", service.model_name, service.model_version
+                )
+            else:
+                logger.warning(
+                    "No trained ML model found — /ml/predict will return 503. "
+                    "Run: python scripts/train.py"
+                )
+        loop.run_in_executor(None, _load_ml)
     else:
         logger.warning(
             "ML_AUTO_LOAD_ON_STARTUP=false — skipping ML model warm-up; "
             "/ml/predict will return 503."
         )
-    app.state.inference_service = service
     # ─────────────────────────────────────────────────────────────────────────
 
     # ── Vision model warm-up ─────────────────────────────────────────────────
-    # Primary path: v6 Stage C bilateral checkpoint (stage_c_bilateral/best.pt).
-    # Fallback: VisionModelStore (legacy versioned directories).
-    # Failures are non-fatal; endpoints return 503 until a model is available.
     import os
     from pathlib import Path as _Path
 
@@ -88,72 +90,82 @@ async def lifespan(app: FastAPI):
     _V6_TEMP = _Path("models/vision/v6_medical/calibration/temperature_config.json")
 
     vision_service = VisionInferenceService()
+    app.state.vision_service = vision_service
+    app.state.vision_gate_service = None
+    app.state.image_upload_handler = ImageUploadHandler()
+
     if settings.VISION_AUTO_LOAD_ON_STARTUP:
-        loaded = False
-        if _V6_CKPT.exists():
-            loaded = vision_service.load_v6_calibrated(
-                checkpoint_path=_V6_CKPT,
-                temperature_config_path=_V6_TEMP if _V6_TEMP.exists() else None,
-            )
-            if loaded:
-                logger.info(
-                    "Vision model ready (v6 calibrated): %s @ %s | T=%.4f",
-                    vision_service.architecture, vision_service.version,
-                    vision_service.calibration_temperature,
+        _v6_ckpt_exists = _V6_CKPT.exists()
+        _v6_temp_path = _V6_TEMP if _V6_TEMP.exists() else None
+
+        def _load_vision():
+            loaded = False
+            if _v6_ckpt_exists:
+                loaded = vision_service.load_v6_calibrated(
+                    checkpoint_path=_V6_CKPT,
+                    temperature_config_path=_v6_temp_path,
                 )
-            else:
-                logger.warning(
-                    "v6 calibrated checkpoint found but failed to load — "
-                    "falling back to VisionModelStore"
-                )
-        if not loaded:
-            loaded = vision_service.load_from_store()
-            if loaded:
-                logger.info(
-                    "Vision model ready (store): %s @ %s",
-                    vision_service.architecture, vision_service.version,
-                )
-            else:
-                logger.warning(
-                    "No vision model available — /vision/predict and "
-                    "/medical/analyze will return 503."
-                )
+                if loaded:
+                    logger.info(
+                        "Vision model ready (v6 calibrated): %s @ %s | T=%.4f",
+                        vision_service.architecture, vision_service.version,
+                        vision_service.calibration_temperature,
+                    )
+                else:
+                    logger.warning(
+                        "v6 calibrated checkpoint found but failed to load — "
+                        "falling back to VisionModelStore"
+                    )
+            if not loaded:
+                loaded = vision_service.load_from_store()
+                if loaded:
+                    logger.info(
+                        "Vision model ready (store): %s @ %s",
+                        vision_service.architecture, vision_service.version,
+                    )
+                else:
+                    logger.warning(
+                        "No vision model available — /vision/predict and "
+                        "/medical/analyze will return 503."
+                    )
+        loop.run_in_executor(None, _load_vision)
     else:
         logger.warning(
             "VISION_AUTO_LOAD_ON_STARTUP=false — skipping vision model warm-up."
         )
-    app.state.vision_service = vision_service
 
-    gate_service: VisionInferenceService | None = None
     gate_version = os.environ.get("VISION_GATE_VERSION")
     if gate_version:
-        candidate = VisionInferenceService()
-        if candidate.load_from_store(version=gate_version):
-            logger.info(
-                "Vision relevance gate loaded: %s @ %s",
-                candidate.architecture, candidate.version,
-            )
-            gate_service = candidate
-        else:
-            logger.warning(
-                "VISION_GATE_VERSION=%s requested but failed to load.", gate_version
-            )
-    app.state.vision_gate_service = gate_service
-
-    app.state.image_upload_handler = ImageUploadHandler()
+        def _load_gate():
+            candidate = VisionInferenceService()
+            if candidate.load_from_store(version=gate_version):
+                logger.info(
+                    "Vision relevance gate loaded: %s @ %s",
+                    candidate.architecture, candidate.version,
+                )
+                app.state.vision_gate_service = candidate
+            else:
+                logger.warning(
+                    "VISION_GATE_VERSION=%s requested but failed to load.", gate_version
+                )
+        loop.run_in_executor(None, _load_gate)
     # ─────────────────────────────────────────────────────────────────────────
 
     # ── CLIP semantic analyzer warm-up ───────────────────────────────────────
-    # Loads ViT-B-32/openai once so the first vision request is not penalized
-    # by ~3–5 s of CLIP disk I/O.  Non-fatal: if CLIP is unavailable the gate
-    # silently falls through (logged as a warning per request).
     try:
-        import asyncio as _asyncio
         from app.modules.vision.semantic.semantic_analyzer import get_semantic_analyzer as _get_sem
-        await _asyncio.to_thread(_get_sem)
-        logger.info("CLIP semantic analyzer ready (ViT-B-32/openai)")
+
+        def _load_clip():
+            try:
+                _get_sem()
+                logger.info("CLIP semantic analyzer ready (ViT-B-32/openai)")
+            except Exception as _exc:  # noqa: BLE001 — non-fatal on startup
+                logger.warning(
+                    "CLIP semantic analyzer warm-up failed: %s — gate will be skipped", _exc
+                )
+        loop.run_in_executor(None, _load_clip)
     except Exception as _exc:  # noqa: BLE001 — non-fatal on startup
-        logger.warning("CLIP semantic analyzer warm-up failed: %s — gate will be skipped", _exc)
+        logger.warning("CLIP import failed: %s — gate will be skipped", _exc)
     # ─────────────────────────────────────────────────────────────────────────
 
     # ── AI assistant warm-up (Ollama) ────────────────────────────────────────
@@ -161,7 +173,7 @@ async def lifespan(app: FastAPI):
     # underlying httpx.AsyncClient.  Failure here is non-fatal: /ai endpoints
     # will return 503 until Ollama is reachable.
     from app.modules.ai.config import ai_config
-    from app.modules.ai.providers.ollama import OllamaProvider
+    from app.modules.ai.providers.groq import GroqProvider
     from app.modules.ai.services.chat_service import AIChatService
     from app.modules.ai.services.health import AIHealthService
     from app.modules.ai.services.interpretation import (
@@ -181,7 +193,7 @@ async def lifespan(app: FastAPI):
 
     if ai_config.enabled:
         try:
-            ai_provider = OllamaProvider(ai_config.ollama)
+            ai_provider = GroqProvider(ai_config.groq)
             app.state.ai_provider = ai_provider
             app.state.ai_chat_service = AIChatService(
                 provider=ai_provider, config=ai_config,
@@ -200,8 +212,8 @@ async def lifespan(app: FastAPI):
                 provider=ai_provider, config=ai_config,
             )
             logger.info(
-                "AI assistant ready: provider=Ollama base_url=%s model=%s",
-                ai_config.ollama.base_url, ai_config.ollama.model,
+                "AI assistant ready: provider=Groq model=%s",
+                ai_config.groq.model,
             )
         except Exception as exc:  # noqa: BLE001 — non-fatal on startup
             logger.warning("AI assistant init failed: %s — /ai endpoints will 503", exc)

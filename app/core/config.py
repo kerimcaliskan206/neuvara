@@ -43,12 +43,11 @@ class Settings(BaseSettings):
     ML_AUTO_LOAD_ON_STARTUP: bool = True
     VISION_AUTO_LOAD_ON_STARTUP: bool = True
 
-    # AI assistant (Ollama)
+    # AI assistant (Groq)
     AI_ENABLED: bool = True
-    OLLAMA_BASE_URL: str = "http://localhost:11434"
-    OLLAMA_MODEL: str = "llama3.1:8b"
-    OLLAMA_TIMEOUT_SECONDS: float = 60.0
-    OLLAMA_KEEP_ALIVE: str = "5m"
+    GROQ_API_KEY: str = ""
+    GROQ_MODEL: str = "llama-3.3-70b-versatile"
+    GROQ_TIMEOUT_SECONDS: float = 30.0
     AI_TEMPERATURE: float = 0.2
     AI_TOP_P: float = 0.9
     AI_MAX_TOKENS: int = 512
