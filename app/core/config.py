@@ -20,12 +20,8 @@ class Settings(BaseSettings):
     # API
     API_V1_PREFIX: str = "/api/v1"
 
-    # Database
-    POSTGRES_HOST: str
-    POSTGRES_PORT: int = 5432
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str
+    # Database — Neon/Railway provides a single DATABASE_URL
+    DATABASE_URL: str
 
     # JWT
     JWT_SECRET_KEY: str
@@ -57,17 +53,20 @@ class Settings(BaseSettings):
 
     @property
     def database_url(self) -> str:
-        return (
-            f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
-            f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
-        )
+        """asyncpg-compatible URL for SQLAlchemy async engine."""
+        url = self.DATABASE_URL
+        url = url.replace("postgres://", "postgresql://", 1)
+        if not url.startswith("postgresql+asyncpg://"):
+            url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return url
 
     @property
     def database_url_sync(self) -> str:
-        return (
-            f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
-            f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
-        )
+        """Standard psycopg2-compatible URL for Alembic offline mode."""
+        url = self.DATABASE_URL
+        url = url.replace("postgres://", "postgresql://", 1)
+        url = url.replace("postgresql+asyncpg://", "postgresql://", 1)
+        return url
 
     @property
     def is_production(self) -> bool:
